@@ -1,0 +1,112 @@
+{
+  "exp_name": "example",
+  "save_dir": "experiments",
+  "mode": "train",
+  "datasheet_path": "data/cleaned_split.csv",
+  "billy_datasheet_path": "data_down.csv",
+  "use_s3_bucket": true,
+  "kwargs_s3_bucket": {
+    "database_keys": {
+      "AWS_STAGE": {
+        "bucket_name": "agamotto-file-storage-staging",
+        "local_root": "/opt/ImageBase/mosID-staging/"
+      },
+      "AWS": {
+        "bucket_name": "agamotto-file-storage-production",
+        "local_root": "/opt/ImageBase/mosID-production/"
+      },
+      "CUSTOM": {
+        "bucket_name": "",
+        "local_root": ""
+      }
+    },
+    "region_name": "us-east-2"
+  },
+  "kwargs_augmentation": {
+    "p": 1,
+    "setting": 0,
+    "white_balance": true
+  },
+  "whitebalance_cache_prefix": "_wb",
+  "mask_kwargs": {
+    "mask_size": 448,
+    "prob_use_mask": 1,
+    "rand_mask_colors": [
+      null,
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "CMUNet_path": "ext_models/mosquitoes_cmunet448/best_weights.pt",
+    "cuda_device": 0
+  },
+  "mask_cache_prefix": "_masks",
+  "track_time": false,
+  "epochs": 10,
+  "test_epoch": 40,
+  "batch_size": 8,
+  "num_workers": 2,
+  "lr": 0.0005,
+  "weight_decay": 0.001,
+  "backgournd_RGB_cropped": [
+    0,
+    0,
+    0
+  ],
+  "attn_model": "multihead",
+  "k": 2,
+  "imsize": 299,
+  "max_pixel": 255,
+  "min_pixel": 0,
+  "num_classes": 32,
+  "one_hot_labels": false,
+  "single_network_model": false,
+  "freeze_ratio_single_model": 0.3,
+  "initial_model_kwargs": {
+    "load_pretrained_tax_model": false,
+    "initial_model_tax_path": "model_best_base_tax.pth",
+    "load_pretrained_base_model": false,
+    "initial_model_base_path": "model_best_base.pth",
+    "load_pretrained_models": false,
+    "initial_model_path": "experiments/exp-only_tax/model_best.pth"
+  },
+  "freeze_weights_kwargs": {
+    "freeze_weights": true,
+    "freeze_ratio_tax_model_parameters": 0.75
+  },
+  "debug": false,
+  "early_stopping_kwargs": {
+    "patience": 15,
+    "min_delta": 1e-05
+  },
+  "save_every": 20,
+  "weight_logits_base": 0.2,
+  "weight_logits_crop": 0.0,
+  "weight_logits_drop": 0.0,
+  "threshold_ratio_crop": 0.1,
+  "threshold_ratio_drop": 0.9,
+  "num_batches_att_visualization_valid": 5,
+  "num_batches_att_visualization_test": 10,
+  "loss": "MosLoss",
+  "loss_kwargs": {
+    "loss_dict": {
+      "FocalLoss": {
+        "gamma": 2.0,
+        "weight": 1.0,
+        "mag_scale": 1.0
+      }
+    }
+  },
+  "weighted_loss_parameters": {
+    "combined_loss_weight": 0.7,
+    "diversity_loss_weight": 0
+  },
+  "device": "cuda",
+  "gpu_ids": [
+    0,
+    1,
+    2
+  ]
+}
